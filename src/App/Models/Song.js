@@ -8,7 +8,7 @@ const SongSchema = new mongoose.Schema({
     lyrics: { type: String },
     author: { type: String },
     poster: { type: Schema.Types.ObjectId, ref: "User" },
-    likeds: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    likedsCount: { type: Number },
     viewsCount: { type: Number },
     type: { type: String },
     coverUrl: { type: String },

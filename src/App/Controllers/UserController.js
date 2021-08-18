@@ -36,13 +36,8 @@ class UserController {
             const token = jwt.sign(body, process.env.TOKEN_SECRET_KEY);
             const newUser = new User({
                 username: body.username,
-                avatarUrl: null,
-                dob: null,
                 email: body.email,
                 password: md5(body.password),
-                followers: [],
-                songs: [],
-                playlists: []
             });
             const savedUser = await newUser.save();
             const {
