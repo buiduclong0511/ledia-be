@@ -7,19 +7,31 @@ class SongController {
             const body = req.body;
             const audioFile = req.files.audioFile;
             const thumbFile = req.files.thumb;
-            const audio = await cloudinary.uploader.upload(audioFile[0].path, { resource_type: 'raw', public_id: `AudioUploads/${audioFile[0].originalname}` })
+            const audio = await cloudinary.uploader.upload(audioFile[0].path, { resource_type: 'raw', public_id: `AudioUploads/${Date.now()}-${audioFile[0].originalname}` })
             const fileUrl = audio.url;
-            const thumb = await cloudinary.uploader.upload(thumbFile[0].path, { resource_type: 'raw', public_id: `ImagesUploads/${thumbFile[0].originalname}` })
+            const thumb = await cloudinary.uploader.upload(thumbFile[0].path, { resource_type: 'raw', public_id: `ImagesUploads/${Date.now()}-${thumbFile[0].originalname}` })
             const coverUrl = thumb.url;
+            // const newSong = new Song({
+            //     songName: body.songName,
+            //     singer: body.singer,
+            //     lyrics: body.lyrics,
+            //     author: body.author,
+            //     poster: body.poster,
+            //     type: body.type,
+            //     coverUrl,
+            //     fileUrl,
+            // });
             const newSong = new Song({
                 songName: body.songName,
                 singer: body.singer,
                 lyrics: body.lyrics,
                 author: body.author,
                 poster: body.poster,
+                likedsCount: 0,
+                viewsCount: 0,
                 type: body.type,
                 coverUrl,
-                fileUrl,
+                fileUrl
             });
             
             const savedSong = await newSong.save();

@@ -1,4 +1,7 @@
 const mongoose = require("mongoose");
+const slug = require('mongoose-slug-generator');
+
+mongoose.plugin(slug);
 
 const Schema = mongoose.Schema;
 
@@ -12,7 +15,8 @@ const SongSchema = new mongoose.Schema({
     viewsCount: { type: Number },
     type: { type: String },
     coverUrl: { type: String },
-    fileUrl: { type: String }
+    fileUrl: { type: String },
+    slug: { type: String, slug: "songName", unique: true }
 }, {
     timestamps: true
 })
