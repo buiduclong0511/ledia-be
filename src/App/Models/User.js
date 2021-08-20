@@ -10,7 +10,9 @@ const UserSchema = new mongoose.Schema({
     password: { type: String },
     followers: [{ type: Schema.Types.ObjectId, ref: "User" }],
     songs: [{ type: Schema.Types.ObjectId, ref: "Song" }],
-    playlists: [{ type: Schema.Types.ObjectId, ref: "Playlist" }]
+    playlists: [{ type: Schema.Types.ObjectId, ref: "Playlist" }],
+    likedSongs: [{ type: Schema.Types.ObjectId, ref: "Song" }],
+    playedSongs: [{ type: Schema.Types.ObjectId, ref: "Song" }]
 }, {
     timestamps: true
 })

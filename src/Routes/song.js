@@ -9,6 +9,7 @@ const router = express.Router();
 router.post("/", verifyToken, upload.fields([
     { name: "thumb", maxCount: 1 },
     { name: "audioFile", maxCount: 1 }
-]), songController.store)
+]), songController.store);
+router.get("/", songController.show);
 
 module.exports = router;
