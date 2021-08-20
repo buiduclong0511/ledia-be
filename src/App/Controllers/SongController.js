@@ -43,31 +43,37 @@ class SongController {
         try {
             const { all, q } = req.query;
             if (!all && !q) {
-                res.status(403).json();
+                res.status(400).json();
                 return;
             }
 
             let songs;
-            if (all === "true") {
-                songs = await Song.find({
-                    slug: {
-                        $regex: slug(q),
-                        $options: "i"
-                    }
-                })
-                .sort({ viewsCount: -1 });
-            } else if (!all) {
-                songs = await Song.find({
-                    slug: {
-                        $regex: slug(q),
-                        $options: "i"
-                    }
-                })
-                .sort({ viewsCount: -1 })
-                .limit(3);
+            if (q) {
+                if (all === "true") {
+                    songs = await Song.find({
+                        slug: {
+                            $regex: slug(q),
+                            $options: "i"
+                        }
+                    })
+                    .sort({ viewsCount: -1 });
+                } else if (!all) {
+                    songs = await Song.find({
+                        slug: {
+                            $regex: slug(q),
+                            $options: "i"
+                        }
+                    })
+                    .sort({ viewsCount: -1 })
+                    .limit(3);
+                } else {
+                    res.status(400).json();
+                    return;
+                }
             } else {
-                res.status(400).json();
-                return;
+                songs = await Song.find()
+                .sort({ viewsCount: -1 })
+                .limit(6);
             }
             res.json({
                 songs
