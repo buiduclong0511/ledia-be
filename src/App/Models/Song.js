@@ -13,7 +13,6 @@ const SongSchema = new mongoose.Schema({
     poster: { type: Schema.Types.ObjectId, ref: "User" },
     likedsCount: { type: Number },
     viewsCount: { type: Number },
-    type: { type: String },
     coverUrl: { type: String },
     fileUrl: { type: String },
     slug: { type: String, slug: "songName", unique: true }
