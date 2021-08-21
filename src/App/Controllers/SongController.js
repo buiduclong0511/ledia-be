@@ -22,7 +22,6 @@ class SongController {
                 poster: body.poster,
                 likedsCount: 0,
                 viewsCount: 0,
-                type: body.type,
                 coverUrl,
                 fileUrl
             });
