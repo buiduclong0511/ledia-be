@@ -40,7 +40,7 @@ class SongController {
     // [GET] /show
     show = async (req, res) => {
         try {
-            const { all, q } = req.query;
+            const { all, q, page } = req.query;
             if (!all && !q) {
                 res.status(400).json();
                 return;
@@ -57,14 +57,26 @@ class SongController {
                     })
                     .sort({ viewsCount: -1 });
                 } else if (!all) {
-                    songs = await Song.find({
-                        slug: {
-                            $regex: slug(q),
-                            $options: "i"
-                        }
-                    })
-                    .sort({ viewsCount: -1 })
-                    .limit(3);
+                    if (page) {
+                        songs = await Song.find({
+                            slug: {
+                                $regex: slug(q),
+                                $options: "i"
+                            }
+                        })
+                        .sort({ viewsCount: -1 })
+                        .skip((Number(page) - 1) * 6)
+                        .limit(6);
+                    } else {
+                        songs = await Song.find({
+                            slug: {
+                                $regex: slug(q),
+                                $options: "i"
+                            }
+                        })
+                        .sort({ viewsCount: -1 })
+                        .limit(3);
+                    }
                 } else {
                     res.status(400).json();
                     return;
